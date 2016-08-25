@@ -1,13 +1,10 @@
 # Auto Layout - Interface Builder
 
-
-> I like turtles. 
- 
+> I like turtles.  
 
 ## Learning Objectives
 
-* 
-
+* FILL IN
 
 ## Outline / Notes
 
