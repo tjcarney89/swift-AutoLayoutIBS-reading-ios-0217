@@ -1,18 +1,22 @@
 # Interface Builder: Auto Layout
 
-> I like turtles.  
+> “Human knowledge is never contained in one person. It grows from the relationships we create between each other and the world, and still it is never complete.”  ― Paul Kalanithi
+
+## Overview
+
+In this lesson, we'll look at Auto Layout and constraints 
 
 ## Learning Objectives
 
-* Understand the problems solved by Auto Layout
-* Understand how constraints are used to align objects in iOS user interfaces
+* Describe how Auto Layout allows for flexible UI design
+* Use constraints to align objects in iOS user interfaces
 * Add constraints to user interface elements
 * Examine the constraints that have been added to storyboards
 * Look up constraints' attributes in Interface Builder
 
 ## Auto Layout
 
-In the last lesson, you learned about frames and bounds in iOS programming. Frames and bounds are very important bits of knowledge to know and understand, but don't forget the motivation for learning about them. The real issue is that your iOS programs have to be designed to run on screens of different dimensions, including the 4-inch screen of the iPhone 5, the 4.7-inch screen of the iPhone 6, the 5.5-inch screen of the iPhone 6+, and even the 3.5-inch screen of the iPhone 4S. You might even want your app to run on an iPad, which obviously has a much larger screen than the iPhones. These screens differ not only in physical size, but also in the number of pixels they can display; the iPhone 6+ is 750×1334, whereas the iPhone 4S is 640×960. Your app may also run in landscape mode, which reverses the pixel dimensions—the viewable area of an app in landscape mode is much wider but a bit shorter than an app running in portrait mode. Here's a helpful infographic that shows the plethora of screen sizes available on Apple devices:
+ Frames and bounds are very important bits of knowledge to know and understand, but don't forget the motivation for learning about them. The real issue is that your iOS programs have to be designed to run on screens of different dimensions, including the 4-inch screen of the iPhone 5, the 4.7-inch screen of the iPhone 6, the 5.5-inch screen of the iPhone 6+, and even the 3.5-inch screen of the iPhone 4S. You might even want your app to run on an iPad, which obviously has a much larger screen than the iPhones. These screens differ not only in physical size, but also in the number of pixels they can display; the iPhone 6+ is 750×1334, whereas the iPhone 4S is 640×960. Your app may also run in landscape mode, which reverses the pixel dimensions—the viewable area of an app in landscape mode is much wider but a bit shorter than an app running in portrait mode. Here's a helpful infographic that shows the plethora of screen sizes available on Apple devices:
 
 ![iOS Device Sizes](https://s3.amazonaws.com/learn-verified/iPhoneSizes.png)
 
