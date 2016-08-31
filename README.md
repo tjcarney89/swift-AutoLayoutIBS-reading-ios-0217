@@ -1,228 +1,145 @@
-# Auto Layout - Interface Builder
+# Interface Builder: Auto Layout
 
-
-> I like turtles. 
- 
+> I like turtles.  
 
 ## Learning Objectives
 
-* 
+* Understand the problems solved by Auto Layout
+* Understand how constraints are used to align objects in iOS user interfaces
+* Add constraints to user interface elements
+* Examine the constraints that have been added to storyboards
+* Look up constraints' attributes in Interface Builder
 
+## Auto Layout
 
-## Outline / Notes
+In the last lesson, you learned about frames and bounds in iOS programming. Frames and bounds are very important bits of knowledge to know and understand, but don't forget the motivation for learning about them. The real issue is that your iOS programs have to be designed to run on screens of different dimensions, including the 4-inch screen of the iPhone 5, the 4.7-inch screen of the iPhone 6, the 5.5-inch screen of the iPhone 6+, and even the 3.5-inch screen of the iPhone 4S. You might even want your app to run on an iPad, which obviously has a much larger screen than the iPhones. These screens differ not only in physical size, but also in the number of pixels they can display; the iPhone 6+ is 750×1334, whereas the iPhone 4S is 640×960. Your app may also run in landscape mode, which reverses the pixel dimensions—the viewable area of an app in landscape mode is much wider but a bit shorter than an app running in portrait mode. Here's a helpful infographic that shows the plethora of screen sizes available on Apple devices:
 
-The student would have just learned about Frames & Bounds in relation to `UIView`'s. 
+![iOS Device Sizes](https://s3.amazonaws.com/learn-verified/iPhoneSizes.png)
 
-The iPhone 5, 6 and 6+ (who knows about the 7 right now) all have different screen sizes. Which means we really shouldn't just rely on creating our `UIView`'s by _just_ providing an origin and a size. Someone might be using our app on an iPhone 6+ and some might be using it on an iPhone 5--we need to account for that. Auto layout is the answer.
+These various screen sizes and modes can make it difficult to design and lay out an app's user interface so it looks good across all devices. Luckily, Apple has a response to this problem: Auto Layout. Auto Layout lets you design your UI so the user interface elements are laid out _relative_ to each other and the screen. This means that instead of saying, "The top-left corner of this button should appear at exactly 200 pixels to the left and 200 pixels from the top of the screen," you can say, "This button should appear 20 pixels to the right and 20 pixels below this other image view," and it will look correct across all devices. Or you can say, "This label should appear exactly in the middle of the screen," and it will appear in the middle for all devices.
 
-I think we should discuss how the initial scene in the `Main.storyboard` file of a new project is just a big giant white square. This doesn't look like an iPhone, nor an iPad. Apple doesn't make any square devices. This is the default layout that apple provides to us when we create an application. It's on us (the developer) to layout these various using Auto Layout so that way we account for any device this might run on in Apples lineup.
+Let's take a look at how Auto Layout works in Xcode and Interface Builder.
 
-![](https://s3.amazonaws.com/learn-verified/IBFirstScreen.png)
+## Interface Builder
 
-Locating the Attributes Inspector, we can lay this out to reflect an actual iPhone (especially if we're going to be making an iPhone application).
+Open up the `ViewFun.xcodeproj` project in this repo in Xcode. Click on `Main.storyboard` to bring it up in Interface Builder. You'll see this:
 
-![](https://s3.amazonaws.com/learn-verified/IBSizeExample.png)
+![`Main.storyboard`](https://s3.amazonaws.com/learn-verified/IBFirstScreen.png)
 
-Within the Size menu, we have choices:
+You should notice something obvious: The main view of your app is a square, but Apple doesn't make any square devices! What gives?
 
-![](https://s3.amazonaws.com/learn-verified/IBSizeChoices.png)
+By default, Xcode projects use storyboards that are generalized for _all_ iOS devices, which is to say they present a shape that fits _no_ iOS device. This may seem odd, but it requires that you deal with Auto Layout issues immediately when designing your app. What you see in Interface Builder is _never_ what you'll get on an actual device, so you have to use Auto Layout to get a look and feel that will be consistent across all devices). You can't rely on absolute positioning to get the look you want.
 
-![](https://s3.amazonaws.com/learn-verified/iPhoneSizes.png)
+### Designing For One Screen
 
-I like to layout my views within in Xcode as if I'm working on an iPhone 6, so to simulate an iPhone 6--we would have to choose the iPhone 4.7-inch option.
+Interface Builder does provide an escape valve, though. You can set storyboards to display for a specific device, if you want to be able to initially lay out elements more comfortably. With `Main.storyboard` open, select **View Controller Scene**, then bring up the Attributes Inspector. At the top of the Attributes Inspector, you'll see an option marked **Size**, which allows you to set the size in which the storyboard is rendered.
 
-After selecting that option, we should see this:
+![Attributes Inspector](https://s3.amazonaws.com/learn-verified/IBSizeExample.png)
 
-![](https://s3.amazonaws.com/learn-verified/IBIphone6.png)
+Clicking on **Size** brings up a menu with several options:
 
-Maybe we can then step into the `viewDidLoad()` in the `ViewController.swift` file to do something like this:
+![Size Options](https://s3.amazonaws.com/learn-verified/IBSizeChoices.png)
+
+Selecting one of these options will change the storyboard so it is rendered using the dimensions of that device. For example, if you select **iPhone 4.7-inch**, the storyboard will change to look like this:
+
+![iPhone 4.7-inch](https://s3.amazonaws.com/learn-verified/IBIphone6.png)
+
+You may find it easier to lay out your app in a storyboard that represents the size of an actual device. Or, you may prefer to do it in a size-agnostic (square) layout. The choice is up to you. Either way, you'll make use of Auto Layout so that your app looks good on _any_ device.
+
+## Coding Up Your Interface
+
+To demonstrate the problems that Auto Layout solves, let's first dispense with Interface Builder entirely, and instead draw a simple UI in code. This UI will simply draw a blue square in the top left corner of the screen, and a smaller red square in the bottom right corner.
+
+Start a new Xcode project using the Single View Application template. This will give you a completely blank app. Add this bit of code to `ViewController`'s `viewDidLoad()` method (in `ViewController.swift`):
 
 ```swift
 let blueView = UIView(frame: CGRect(x: 20.0, y: 20.0, width: 100.0, height: 100.0))
 blueView.backgroundColor = UIColor.blueColor()
 view.addSubview(blueView)
-        
-let redView = UIView(frame: CGRect(x: 100.0, y: 100.0, width: 40.0, height: 40.0))
-blueView.backgroundColor = UIColor.redColor()
+
+let redView = UIView(frame: CGRect(x: 150.0, y: 150.0, width: 40.0, height: 40.0))
+redView = UIColor.redColor()
 view.addSubview(redView)
 ```
 
-Creating our views progrmatically like this, we get the following result when we run this on an iPhone 6+
+If you build and run this app in the iPhone 6S Plus simulator (the default simulator), you'll see something like this:
 
-### iPhone 6+:
-![](https://s3.amazonaws.com/learn-verified/IB-iPhone6Plus.png)
+![iPhone 6 Plus](https://s3.amazonaws.com/learn-verified/IB-iPhone6Plus.png)
 
-### iPhone 4:
-![](https://s3.amazonaws.com/learn-verified/IB-iPhone4.png)
+Not _exactly_ what you want, but good enough as an example. Now, try running it in the iPhone 4S Simulator. You can do that by clicking on the menu that says **iPhone 6S Plus** in Xcode's toolbar:
 
-This is no way to design an iOS application. Here we're wrestling with just two different `UIView`'s and on the iPhone 4S, the `redView` appears as if it's almost in the center and the `blueView` is taking up a large portion of the screen.
+![Simulator selection menu](https://s3.amazonaws.com/learn-verified/xcode-simulator-selection.png)
 
-I'm not sure how great this example is here, maybe having them center just one view might be better to show them then we show how easy it is creating constraints within Interface Builder?
+Doing so brings up a menu where you can select the **iPhone 4S** simulator:
 
-This will also be the first time they will be selecting various devices to run their application on, I think we should show them where they can do that:
+![Simulator selection menu](https://s3.amazonaws.com/learn-verified/IB-Choices.png)
 
-![](https://s3.amazonaws.com/learn-verified/IB-Choices.png)
+When you run your app in the iPhone 4S simulator, you'll see something like this:
 
-If we stick with my example of the `blueView` and `redView`. Maybe we can pose the following problem: What if we wanted to ensure (no matter what the device is) that the `blueView` remain in the top left portion of the device and the `redview` remain in the lower right of the device. Doing this by creating the frames of these particular views will be very tedious (and isn't the best answer).
+![iPhone 4S](https://s3.amazonaws.com/learn-verified/IB-iPhone4.png)
 
-We can use constrains within in Interface Builder.
+That looks a lot like what you saw in the iPhone 6 Plus...but not exactly the same. It needs a bit of tweaking to look identical.
 
-First lets remove the code we had written in the `viewDidLoad()` method.
+Unfortunately, you've probably realized by now that you'd have to do _a lot_ of tweaking to make this UI look the same (or nearly the same) across _all_ iOS devices. That's pretty time consuming, and it's no way to build a UI in 2016!
 
-If we head back over to the `Main.storyboard` file, we can add two `UIViews` to the canvas, size them to be 150h x 150w, make one have a red background color, the other blue and drag them to the corners of the canvas, like so:
+Let's use Interface Builder and Auto Layout instead. Delete the code you added to `viewDidLoad()` and open up `Main.storyboard` in Interface Builder.
 
-![](https://s3.amazonaws.com/learn-verified/IB-RedBlueView.png)
+## Auto Layout and Constraints
 
-Considering this canvas we're working on is simulating the size of an iPhone 6, if we were to run this app on an iPhone 6 we would be met with the following screen which looks perfectly fine. But we have yet to add any constraints to these views, so if we were to run this on devices other than the iPhone 6 - it wouldn't look right.
+iOS's Auto Layout system allows you to lay out user interface in reference to each other and the app's main screen. It also allows you to specify the dimensions (height and width) of various user interface elements relative to the screen size, instead of having a hardcoded size (although you can still have a hardcoded size if you want, too). It does this partly through the use of _constraints_, which specify dimensions and layout based on sizes and distances to other elements. Let's take a look at this in action.
 
+You want to add a blue square to the top left corner and a red square to the bottom right corner of your app's screen. Remember when you learned about frames and parent frames in the previous lesson? Obviously you can't add square to hardcoded coordinates, since the squares' parent frame (the iOS screen) will be different according to the device you're running the app on. Instead, you can lay them out relative to the specific parent frame being used by the iOS app on the current device.
 
-### iPhone 6:
-![](https://s3.amazonaws.com/learn-verified/IB-i6.png)
+In Interface Builder, drag a new `UIView` onto the storyboard. Position it in the top left corner of your storyboard. In the view's Size Inspector, set its size to 100×100. In its Attributes Inspector, set its background color to blue.
 
-### iPhone 4:
-The blue box doesn't even appear on screen.
+Drag another `UIView` to the bottom left corner of your storyboard. In the view's Size Inspector, set its size to 40×40. In its Attributes Inspector, set its background color to red.
 
-![](https://s3.amazonaws.com/learn-verified/IB-i4.png)
+When you're done, your storyboard should look like this:
 
-### iPhone 5:
+![Storyboard](https://s3.amazonaws.com/learn-verified/interface-builder-squares.png)
 
-![](https://s3.amazonaws.com/learn-verified/IB-i5.png)
+At this point, you are _not_ yet using Auto Layout at all. Run your app on different simulators. You'll see a different UI in each simulator. For example, on the iPhone 6S Plus, the red square probably won't be anchored to the bottom right corner. In the iPhone 4S, you might not even see the red square at all.
 
-### iPhone 6+:
+Let's add _constraints_ to this app.
 
-![](https://s3.amazonaws.com/learn-verified/IB-i6%2B.png)
+First, select the blue square. To add constraints, click on the **Pin** button on the bottom of Interface Builder. It looks like this:
 
-Lets add some constraints going back to `Main.Storyboard`.
+![Pin Icon](https://s3.amazonaws.com/learn-verified/interface-builder-pin-icon.png)
 
-There are a few options we have here. We can tell them how they can control drag from the view object on the canvas to anywhere outside of that view to then be selected with various options on where we want to constrain this view to. Or, we can have them select the pin icon in the lower right which looks like a tie fighter. The tie fighter approach might be easier for them first (maybe?). In selecting this icon after our view is selected, we will want to click the red I line which will say - constrain this to the top of its closets view which is the `view` object we've placed this in (white background). Also, constrain it to the left of the `view`. As well, in checking off Width and Height, we are stating that the Height and Width must be 150 points.
+Click once on that icon to bring up the Pin menu. This aspect of Auto Layout lets you set constraints that _pin_ your UI element (in this case, a `UIView`) to other elements (in this case, the main view of the app). You want this square to always appear in the top left corner on _every_ device, so click the dotted red lines on the top and left side of the white square in the Pin menu. You should also check the **Width** and **Height** menus. When you're done, the Pin menu will look like this:
 
-![](https://s3.amazonaws.com/learn-verified/IB-ConstraintRedView.png)
+![Pin Menu Constraints](https://s3.amazonaws.com/learn-verified/interface-builder-constraints.png)
 
-Then they can click "Add Constraints"
+Click **Add 4 Constraints** to add these constraints. You can see a **Constraints** item has been added to the object library. You'll also see some subtle blue lines around the blue square indicating what constraints are being applied to that view.
 
-Lets do the same with our `blueView`, except where do you think we want to constrain it to. To the lower right so we will click the I on the bottom and the I on the right giving it the same height and width constraints like so:
+![Constraints Confirmation](https://s3.amazonaws.com/learn-verified/interface-builder-constraints-confirmation.png)
 
-![](https://s3.amazonaws.com/learn-verified/IB-ConstraintBlueViewF.png)
+Now select the red square. Do the same thing you did the blue square to add constraints, except this time, select the dotted line of the bottom and right, like this:
 
-After hitting Add 4 Constraints here, we should be good to go.
+![Constraints](https://s3.amazonaws.com/learn-verified/interface-builder-constraints-2.png)
 
-I think it would be nice to discuss how they can go through the various constraints they just made within this scene:
+### Examining Constraints
 
-![](https://s3.amazonaws.com/learn-verified/IB-Overview.png)
+You can check out the constraints you have created in the object library:
 
-What happens if we select the width constraint on the `redView` in this panel:
+![Constraints](https://s3.amazonaws.com/learn-verified/interface-builder-constraints-object-library.png)
 
-![](https://s3.amazonaws.com/learn-verified/IB-RedSelected.png)
+Select the constraint marked **height = 100**. The Attributes Inspector will show the attributes for the constraints:
 
-We're given some options:
+![Constraints Attributes](https://s3.amazonaws.com/learn-verified/interface-builder-constraints-attributes.png)
 
-![](https://s3.amazonaws.com/learn-verified/IB-RedOptions.png)
+In the Attributes Inspector, you can adjust parameters for the constraint if you want. For example, in the **Constant** text field, you could change the width of the view (the blue square) to something else, like 200. You don't want to change any attributes right now, so for now you can ignore this pane, but you may find it to be useful in the future.
 
-We can change this constant to reflect a different size (if we want to), but we know we want it to be 150 x 150 so we will leave it alone. You have various options depending on the constraint amongst any constraint here on all our views.
+### Warnings
 
-What about that yellow warning symbol we see:
+You've probably noticed the yellow warning icon in Xcode's toolbar. Click once on it. It'll display two warnings, both of which are **Frame for "View" will be different at run time.** These warnings mean that the app (and more specifically, some of its views) will look a bit different when you run the app then they do now. Because of the constraints you set up, the view's frames look a bit different in the storyboard than they will when you run the app. But you can fix this!
 
-![](https://s3.amazonaws.com/learn-verified/IB-YelloWarning.png)
+Immediately to the right the **Pin** menu, you should see a menu called **Resolve Auto Layout Issues**. Clicking it will bring up a menu that will let you quickly and easily fix Auto Layout issues. Select **Update Frames** from the **All Views in View Controller** section to resolve the warnings. Boom, warnings gone.
 
-It means that our app will look different at run-time than what is displayed here in our canvas. So we need to fix that so we are working with what it is expected to look like when we run our app. With the `View` selected, in the lower right to the right of the tie fighter we have a triangle surrounded by | |'s, if we select that we have the following options:
+![Update Frames](https://s3.amazonaws.com/learn-verified/interface-builder-update-frames.png)
 
-![](https://s3.amazonaws.com/learn-verified/IB-ViewSelected.png)
+## Voilà
 
-We will want to select "Update Frames". This tells our canvas to reflect what our constraints. Whenever you add new constraints, sometimes the canvas can get out of sync with what it is the constraints are asking it to do, this will bring things back in sync. After clicking that the yellow warning should go away.
-
-Now lets try to run it on all devices.
-
-### iPhone 4:
-
-![](https://s3.amazonaws.com/learn-verified/IB-4F.png)
-
-### iPhone 5:
-
-![](https://s3.amazonaws.com/learn-verified/IB-5F.png)
-
-### iPhone 6:
-
-![](https://s3.amazonaws.com/learn-verified/IB-6F.png)
-
-### iPhone 6+:
-
-![](https://s3.amazonaws.com/learn-verified/IB-6PlusFinal.png)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Now build and run your app on various simulators. You should see that your views appear in the proper corners on every device. That's the power of Auto Layout and constraints!
 
 <a href='https://learn.co/lessons/AutoLayoutIB' data-visibility='hidden'>View this lesson on Learn.co</a>
