@@ -4,7 +4,7 @@
 
 ## Overview
 
-In this lesson, we'll look at Auto Layout and constraints 
+In this lesson, we'll look at Auto Layout and constraints
 
 ## Learning Objectives
 
@@ -58,11 +58,11 @@ Start a new Xcode project using the Single View Application template. This will 
 
 ```swift
 let blueView = UIView(frame: CGRect(x: 20.0, y: 20.0, width: 100.0, height: 100.0))
-blueView.backgroundColor = UIColor.blueColor()
+blueView.backgroundColor = UIColor.blue
 view.addSubview(blueView)
 
 let redView = UIView(frame: CGRect(x: 150.0, y: 150.0, width: 40.0, height: 40.0))
-redView = UIColor.redColor()
+redView.backgroundColor = UIColor.red
 view.addSubview(redView)
 ```
 
