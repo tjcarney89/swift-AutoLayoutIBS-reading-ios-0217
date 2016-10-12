@@ -16,7 +16,7 @@ In this lesson, we'll look at Auto Layout and constraints
 
 ## Auto Layout
 
- Frames and bounds are very important bits of knowledge to know and understand, but don't forget the motivation for learning about them. The real issue is that your iOS programs have to be designed to run on screens of different dimensions, including the 4-inch screen of the iPhone 5, the 4.7-inch screen of the iPhone 6, the 5.5-inch screen of the iPhone 6+, and even the 3.5-inch screen of the iPhone 4S. You might even want your app to run on an iPad, which obviously has a much larger screen than the iPhones. These screens differ not only in physical size, but also in the number of pixels they can display; the iPhone 6+ is 750×1334, whereas the iPhone 4S is 640×960. Your app may also run in landscape mode, which reverses the pixel dimensions—the viewable area of an app in landscape mode is much wider but a bit shorter than an app running in portrait mode. Here's a helpful infographic that shows the plethora of screen sizes available on Apple devices:
+ Frames and bounds are very important bits of knowledge to know and understand, but don't forget the motivation for learning about them. The real issue is that your iOS programs have to be designed to run on screens of different dimensions, including the 4-inch screen of the iPhone SE; the 4.7-inch screen of the iPhone 6, 6S, and 7; and the 5.5-inch screen of the iPhone 6+, 6S+, and 7+. You might even want your app to run on an iPad, which obviously has a much larger screen than the iPhones. These screens differ not only in physical size, but also in the number of pixels they can display; the iPhone 7+ is 1920×1080, whereas the iPhone 7 is 1334x750. Your app may also run in landscape mode, which reverses the pixel dimensions—the viewable area of an app in landscape mode is much wider but a bit shorter than an app running in portrait mode. Here's a helpful infographic that shows the plethora of screen sizes available on Apple devices:
 
 ![iOS Device Sizes](https://s3.amazonaws.com/learn-verified/iPhoneSizes.png)
 
@@ -26,29 +26,17 @@ Let's take a look at how Auto Layout works in Xcode and Interface Builder.
 
 ## Interface Builder
 
-Open up the `ViewFun.xcodeproj` project in this repo in Xcode. Click on `Main.storyboard` to bring it up in Interface Builder. You'll see this:
+Open up the `ViewFun.xcodeproj` project in this repo in Xcode. Click on `Main.storyboard` to bring it up in Interface Builder. You'll see something like this:
 
 ![`Main.storyboard`](https://s3.amazonaws.com/learn-verified/IBFirstScreen.png)
 
-You should notice something obvious: The main view of your app is a square, but Apple doesn't make any square devices! What gives?
-
-By default, Xcode projects use storyboards that are generalized for _all_ iOS devices, which is to say they present a shape that fits _no_ iOS device. This may seem odd, but it requires that you deal with Auto Layout issues immediately when designing your app. What you see in Interface Builder is _never_ what you'll get on an actual device, so you have to use Auto Layout to get a look and feel that will be consistent across all devices). You can't rely on absolute positioning to get the look you want.
-
 ### Designing For One Screen
 
-Interface Builder does provide an escape valve, though. You can set storyboards to display for a specific device, if you want to be able to initially lay out elements more comfortably. With `Main.storyboard` open, select **View Controller Scene**, then bring up the Attributes Inspector. At the top of the Attributes Inspector, you'll see an option marked **Size**, which allows you to set the size in which the storyboard is rendered.
+The thought of designing your app for so many differing device sizes may seem daunting. Interface Builder provides an escape valve, though. You can set storyboards to display for a specific device, if you want to be able to initially lay out elements more comfortably. With `Main.storyboard` open, you can click on the **View as:** option at the bottom of the storyboard, which allows you to simulate the size of various devices in Interface Builder.
 
 ![Attributes Inspector](https://s3.amazonaws.com/learn-verified/IBSizeExample.png)
 
-Clicking on **Size** brings up a menu with several options:
-
-![Size Options](https://s3.amazonaws.com/learn-verified/IBSizeChoices.png)
-
-Selecting one of these options will change the storyboard so it is rendered using the dimensions of that device. For example, if you select **iPhone 4.7-inch**, the storyboard will change to look like this:
-
-![iPhone 4.7-inch](https://s3.amazonaws.com/learn-verified/IBIphone6.png)
-
-You may find it easier to lay out your app in a storyboard that represents the size of an actual device. Or, you may prefer to do it in a size-agnostic (square) layout. The choice is up to you. Either way, you'll make use of Auto Layout so that your app looks good on _any_ device.
+Remember to try out different sizes to see how your layout will appear on different devices!
 
 ## Coding Up Your Interface
 
@@ -84,7 +72,7 @@ When you run your app in the iPhone 4S simulator, you'll see something like this
 
 That looks a lot like what you saw in the iPhone 6 Plus...but not exactly the same. It needs a bit of tweaking to look identical.
 
-Unfortunately, you've probably realized by now that you'd have to do _a lot_ of tweaking to make this UI look the same (or nearly the same) across _all_ iOS devices. That's pretty time consuming, and it's no way to build a UI in 2016!
+Unfortunately, you've probably realized by now that you'd have to do _a lot_ of tweaking to make this UI look the same (or nearly the same) across _all_ iOS devices. That's pretty time consuming, and it's no way to build a UI in this day and age!
 
 Let's use Interface Builder and Auto Layout instead. Delete the code you added to `viewDidLoad()` and open up `Main.storyboard` in Interface Builder.
 
