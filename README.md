@@ -84,7 +84,7 @@ You want to add a blue square to the top left corner and a red square to the bot
 
 In Interface Builder, drag a new `UIView` onto the storyboard. Position it in the top left corner of your storyboard. In the view's Size Inspector, set its size to 100×100. In its Attributes Inspector, set its background color to blue.
 
-Drag another `UIView` to the bottom left corner of your storyboard. In the view's Size Inspector, set its size to 40×40. In its Attributes Inspector, set its background color to red.
+Drag another `UIView` to the bottom right corner of your storyboard. In the view's Size Inspector, set its size to 40×40. In its Attributes Inspector, set its background color to red.
 
 When you're done, your storyboard should look like this:
 
@@ -135,3 +135,5 @@ Immediately to the right the **Pin** menu, you should see a menu called **Resolv
 Now build and run your app on various simulators. You should see that your views appear in the proper corners on every device. That's the power of Auto Layout and constraints!
 
 <a href='https://learn.co/lessons/AutoLayoutIB' data-visibility='hidden'>View this lesson on Learn.co</a>
+
+<p class='util--hide'>View <a href='https://learn.co/lessons/swift-AutoLayoutIBS-reading'>Auto Layout IBS Reading</a> on Learn.co and start learning to code for free.</p>
